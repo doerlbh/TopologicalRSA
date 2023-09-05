@@ -1688,6 +1688,8 @@ def plot_sample_rgtm(
                 df = 24
             elif 'nn' in dataset_name:
                 df = 10
+            else:
+                df = 'pooled'
             p_values.append(get_paired_p_values(ms, ns, ss, df))
         annotator.configure(
             text_format="star", loc=annotate_loc
