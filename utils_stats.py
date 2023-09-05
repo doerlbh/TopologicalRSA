@@ -194,7 +194,10 @@ def get_paired_p_values(ms, ns, ss, df = None):
     n1, n2 = ns
     s1, s2 = ss
     if not df:
-        df = (n1 + n2 - 2)
+        if df == 'pooled':
+            df = n1 + n2 - 2
+        elif df == 'welch':
+            df = np.min((n1, n2)) - 1
     s = np.sqrt(((n1 - 1) * s1**2 + (n2 - 1) * s2**2) / df)
     t = (m1 - m2) / s
     p = stats.t.sf(np.abs(t), df) * 2
