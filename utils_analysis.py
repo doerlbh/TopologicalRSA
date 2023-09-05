@@ -1684,7 +1684,11 @@ def plot_sample_rgtm(
             ms = [plot_results_dict[pr]["mean_data_acc"] for pr in pair]
             ns = [len(plot_results_dict[pr]["sample_data_accs"]) for pr in pair]
             ss = [plot_results_dict[pr]["ustd"] for pr in pair]
-            p_values.append(get_paired_p_values(ms, ns, ss))
+            if 'trans62' in dataset_name:
+                df = 24
+            elif 'nn' in dataset_name:
+                df = 10
+            p_values.append(get_paired_p_values(ms, ns, ss, df))
         annotator.configure(
             text_format="star", loc=annotate_loc
         ).set_pvalues_and_annotate(p_values)
