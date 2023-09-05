@@ -189,15 +189,16 @@ def get_boots_seq(
     return boots_seq
 
 
-def get_paired_p_values(ms, ns, ss, df = None):
+def get_paired_p_values(ms, ns, ss, df = 'pooled'):
     m1, m2 = ms
     n1, n2 = ns
     s1, s2 = ss
-    if not df:
-        if df == 'pooled':
-            df = n1 + n2 - 2
-        elif df == 'welch':
-            df = np.min((n1, n2)) - 1
+    if df == 'pooled':
+        df = n1 + n2 - 2
+    elif df == 'welch':
+        df = np.min((n1, n2)) - 1
+    else:
+        df = df
     s = np.sqrt(((n1 - 1) * s1**2 + (n2 - 1) * s2**2) / df)
     t = (m1 - m2) / s
     p = stats.t.sf(np.abs(t), df) * 2
